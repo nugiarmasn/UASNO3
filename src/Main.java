@@ -1,17 +1,76 @@
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
+import java.util.ArrayList;
+import java.util.List;
+
+class Kendaraan {
+    private String platNomor;
+    private int berat;
+
+    public Kendaraan(String platNomor, int berat) {
+        this.platNomor = platNomor;
+        this.berat = berat;
+    }
+
+    public String getPlatNomor() {
+        return platNomor;
+    }
+
+    public int getBerat() {
+        return berat;
+    }
+}
+
+class TempatParkir {
+    private List<Kendaraan> kendaraanList;
+    private int kapasitas;
+    private int bebanBerat;
+
+    public TempatParkir(int kapasitas, int bebanBerat) {
+        this.kendaraanList = new ArrayList<>();
+        this.kapasitas = kapasitas;
+        this.bebanBerat = bebanBerat;
+    }
+
+    public void masukParkir(Kendaraan kendaraan) {
+        if ((kendaraanList.size() < kapasitas) && (bebanBerat >= kendaraan.getBerat())) {
+            kendaraanList.add(kendaraan);
+            bebanBerat -= kendaraan.getBerat();
+            System.out.println("Kendaraan " + kendaraan.getPlatNomor() + " berhasil masuk ke tempat parkir.");
+        } else {
+            System.out.println("Tempat parkir penuh atau melebihi beban berat maksimal.");
+        }
+    }
+
+    public void tampilkanInfoParkir() {
+        System.out.println("Jumlah kendaraan yang parkir: " + kendaraanList.size());
+        System.out.println("Beban berat tersisa: " + bebanBerat + " kg");
+    }
+}
+
 public class Main {
     public static void main(String[] args) {
-        // Press Alt+Enter with your caret at the highlighted text to see how
-        // IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        // Inisialisasi tempat parkir setiap lantai
+        TempatParkir lantai1 = new TempatParkir(100, 2000);
+        TempatParkir lantai2 = new TempatParkir(100, 1800);
+        TempatParkir lantai3 = new TempatParkir(100, 1500);
 
-        // Press Shift+F10 or click the green arrow button in the gutter to run the code.
-        for (int i = 1; i <= 5; i++) {
+        // Contoh kendaraan yang masuk parkir
+        Kendaraan mobil1 = new Kendaraan("B 1234 CD", 1500);
+        Kendaraan mobil2 = new Kendaraan("D 5678 EF", 1700);
+        Kendaraan mobil3 = new Kendaraan("F 9012 GH", 2000);
 
-            // Press Shift+F9 to start debugging your code. We have set one breakpoint
-            // for you, but you can always add more by pressing Ctrl+F8.
-            System.out.println("i = " + i);
-        }
+        // Kendaraan masuk ke tempat parkir
+        lantai1.masukParkir(mobil1);
+        lantai2.masukParkir(mobil2);
+        lantai3.masukParkir(mobil3);
+
+        // Tampilkan info parkir setiap lantai
+        System.out.println("\nInfo Parkir Lantai 1:");
+        lantai1.tampilkanInfoParkir();
+
+        System.out.println("\nInfo Parkir Lantai 2:");
+        lantai2.tampilkanInfoParkir();
+
+        System.out.println("\nInfo Parkir Lantai 3:");
+        lantai3.tampilkanInfoParkir();
     }
 }
